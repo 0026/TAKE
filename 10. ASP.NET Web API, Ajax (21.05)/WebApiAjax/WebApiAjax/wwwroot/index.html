@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#calc").click(function () {
+                var x = $("#x").val();
+                var y = $("#y").val();
+                $.ajax({
+                    type: "GET", 
+                    url: "api/math?x=" + x + "&y=" + y, 
+                    success: function (dane) {
+                        $("#sum").html(dane.sum);
+                        $("#difference").html(dane.difference);
+                        $("#product").html(dane.product);
+                        $("#quotient").html(dane.quotient);
+                    }
+                });
+            });
+        });
+        function myFunction() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.responseType = 'json';
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("sum").innerHTML = xhttp.response.sum;
+                    document.getElementById("difference").innerHTML = xhttp.response.difference;
+                    document.getElementById("product").innerHTML = xhttp.response.product;
+                    document.getElementById("quotient").innerHTML = xhttp.response.quotient;
+                }
+            };
+            var x = document.getElementById("x").value;
+            var y = document.getElementById("y").value;
+            xhttp.open("GET", "api/math?x=" + x + "&y=" + y, true);
+            xhttp.send();
+        }
+
+    </script>
+    <div>
+        <h1>Calculations</h1>
+        <form>
+            x = <input type="text" id="x" />
+            y = <input type="text" id="y" />
+            <input type="button" id="calc" value="Call API (jQuery)" />
+            <input type="button" 
+                   id="calc2" 
+                   onclick="myFunction()" 
+                   value="Call API (vanilla JS)" />
+        </form>
+        x + y = <span id="sum"></span><br />
+        x - y = <span id="difference"></span><br />
+        x * y = <span id="product"></span><br />
+        x / y = <span id="quotient"></span><br />
+    </div>
+</body>
+</html>
