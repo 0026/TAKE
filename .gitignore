@@ -1,6 +1,2 @@
 **/target/
-node_modules
-dist
-tmp
-out-tsc
-vscode
+**/node_modules
